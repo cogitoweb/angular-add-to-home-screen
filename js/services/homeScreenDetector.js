@@ -4,54 +4,60 @@
  *
  */
 angular.module('angularAddToHomeScreen')
-  .factory('$homeScreenDetector', [function(){
+    .factory('$homeScreenDetector', [function(){
 
-    var parser = new UAParser();
+        var parser = new UAParser();
 
-    function getMajorVersion (version) {
-      return (typeof(version) === 'undefined') ? undefined : version.split('.')[0];
-    }
+        function getMajorVersion (version) {
+            return (typeof(version) === 'undefined') ? undefined : version.split('.')[0];
+        }
 
-    var Detector = function(options) {
-      angular.extend(this, options);
-      if(angular.isDefined(this.customUA)) {
-        parser.setUA(this.customUA);
-      }
-      this.result = parser.getResult();
-    };
+        var Detector = function(options) {
+            angular.extend(this, options);
+            if(angular.isDefined(this.customUA)) {
+                parser.setUA(this.customUA);
+            }
+            this.result = parser.getResult();
+        };
 
-    Detector.prototype.safari = function () {
-      return this.result.browser.name === 'Mobile Safari';
-    };
+        Detector.prototype.safari = function () {
+            return this.result.browser.name === 'Mobile Safari';
+        };
 
-    Detector.prototype.iOS10 = function () {
-      return this.result.os.name === 'iOS' && getMajorVersion(this.result.os.version) === '10';
-    };
+        Detector.prototype.firefox = function () {
+            return this.result.browser.name === 'Firefox';
+        };
 
-    Detector.prototype.iOS9 = function () {
-      return this.result.os.name === 'iOS' && getMajorVersion(this.result.os.version) === '9';
-    };
+        Detector.prototype.Android = function () {
+            return this.result.os.name === 'Android';
+        };
 
-    Detector.prototype.iOS8 = function () {
-      return this.result.os.name === 'iOS' && getMajorVersion(this.result.os.version) === '8';
-    };
+        Detector.prototype.isiOS = function () {
+            return this.isOldiOS() || this.isNewiOS();
+        };
 
-    Detector.prototype.iOS7 = function () {
-      return this.result.os.name === 'iOS' && getMajorVersion(this.result.os.version) === '7';
-    };
+        Detector.prototype.isNewiOS = function () {
+            return this.result.os.name === 'iOS' && parseInt(getMajorVersion(this.result.os.version)) > 6;
+        };
 
-    Detector.prototype.iOS6 = function () {
-      return this.result.os.name === 'iOS' && getMajorVersion(this.result.os.version) === '6';
-    };
+        Detector.prototype.isOldiOS = function () {
+            return this.result.os.name === 'iOS' && parseInt(getMajorVersion(this.result.os.version)) <= 6;
+        };
 
-    Detector.prototype.device = function () {
-      return this.result.device.model;
-    };
+        Detector.prototype.isBrowserOK = function () {
+            return ((this.isiOS() && this.safari()) || (this.Android() && this.firefox())) && !this.fullscreen();
+        };
 
-    Detector.prototype.fullscreen = function () {
-      return (("standalone" in window.navigator) && window.navigator.standalone) ? true : false;
-    };
+        Detector.prototype.device = function () {
+            return this.result.device.model;
+        };
 
-    return Detector;
+        Detector.prototype.fullscreen = function () {
+            return (("standalone" in window.navigator) && window.navigator.standalone) ? true : false;
+        };
 
-  }]);
+        return Detector;
+
+    }]);
+
+

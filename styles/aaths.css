@@ -1,13 +1,48 @@
 .aaths-container {
-  font-size:1em;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    position: relative;
+    background: #E2E2E2;
+    padding: 15px 10px;
+    padding-left: 45px;
+    line-height: 1.3;
+    margin: 0 calc(-5vw - 15px);
+}
+
+.aaths-instructions {
+  font-size: 16px;
+}
+
+.aaths-close {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+  position:absolute;
+  font-size:26px;
+  line-height: 0.75;
+  width:26px;
+  height:26px;
+  text-align: center;
+  vertical-align: middle;
+  color:#fff;
+  top:30%;
+  left: 10PX;
+  background:#2c3e50;
+  border-radius: 50%;
+}
+
+@media (min-width: 600px) {
+  .aaths-instructions {
+    font-size: 18px;
+    text-align: center;
+  }
 }
 
 .aaths-iOS6-icon,
 .aaths-iOS7-icon,
-.aaths-iOS8-icon {
-  width:1em;
-  height:1em;
-  line-height:1em;
+.aaths-iOS8-icon,
+.aaths-android-icon {
+  width:18px;
+  height:18px;
+  line-height:1.1;
   display: inline-block;
   background-size: contain;
   background-position: center center;
@@ -18,10 +53,10 @@
   background-image: url('images/ios6share.png');
 }
 
-.aaths-iOS7-icon {
-  background-image: url('images/ios7share.png');
-}
-
 .aaths-iOS8-icon {
   background-image: url('images/ios8share.png');
+}
+
+.aaths-android-icon {
+  background-image: url('images/android.png');
 }

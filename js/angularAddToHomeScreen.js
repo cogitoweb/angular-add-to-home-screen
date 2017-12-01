@@ -4,8 +4,7 @@
 * Description
 */
 angular.module('angularAddToHomeScreen', [])
-  .constant('aathsLocales', {
-    'en': {
-      'iOS': 'Install this web app on your %device: tap %icon and then <strong>Add to Home Screen</strong>.'
-    }
-  });
+    .constant('aathsLocales', {
+        'iOS': 'Installa la web app nel tuo %device: cliccando %icon e poi <strong>Aggiungi all\'Home Screen</strong>.',
+        'Android': 'Installa la web app nel tuo %device: cliccando %icon, <strong>Pagina</strong> e poi <strong>Aggiungi all\'Home Screen</strong>.'
+    });
