@@ -3,16 +3,16 @@
 *
 * Description
 */
-angular.module('angularAddToHomeScreen', [])
+angular.module('angularAddToHomeScreen', ['ngCookies'])
     .constant('aathsLocales', {
         'iOS': 'Installa la web app nel tuo %device: cliccando %icon e poi <strong>Aggiungi all\'Home Screen</strong>.',
-        'Android': 'Installa la web app nel tuo %device: cliccando %icon, <strong>Pagina</strong> e poi <strong>Aggiungi all\'Home Screen</strong>.'
+        'Android': 'Installa la web app nel tuo %device: cliccando %icon e poi <strong>Aggiungi all\'Home Screen</strong>.'
     });
 
 'use strict';
 
 angular.module('angularAddToHomeScreen')
-    .directive('ngAddToHomeScreen', ['$homeScreenDetector', 'aathsLocales', function($homeScreenDetector, aathsLocales){
+    .directive('ngAddToHomeScreen', ['$homeScreenDetector', '$cookies','aathsLocales', function($homeScreenDetector, $cookies, aathsLocales){
         var hydrateInstructions = function (hsdInstance) {
             //tipo di dispositivo
             var device = hsdInstance.device() || 'dispositivo';
@@ -68,18 +68,23 @@ angular.module('angularAddToHomeScreen')
                     if(angular.isFunction($scope.closeCallback)) {
                         $scope.closeCallback();
                     }
+                    var expireDate = new Date();
+                    expireDate.setDate(expireDate.getDate() + 7);
+                    $cookies.put('a2HSCookie', 'true', {'expires': expireDate});
                 };
                 var hsd = new $homeScreenDetector();
-                console.log(hsd);
                 $scope.closeText = '×';
-                //controllo che il dispositivo sia iOS o Android
-                if(hsd.isBrowserOK()) {
-                    iElm
-                        .addClass('aaths-container')
-                        .append(hydrateInstructions(hsd));
-                }
-                else {
-                    iElm.remove();
+                //controllo i cookies
+                if($cookies.get('a2HSCookie') === undefined) {
+                    //controllo che il dispositivo sia iOS o Android
+                    if(hsd.isBrowserOK()) {
+                        iElm
+                            .addClass('aaths-container')
+                            .append(hydrateInstructions(hsd));
+                    }
+                    else {
+                        iElm.remove();
+                    }
                 }
             }
         };
@@ -142,7 +147,7 @@ angular.module('angularAddToHomeScreen')
         };
 
         Detector.prototype.fullscreen = function () {
-            return (("standalone" in window.navigator) && window.navigator.standalone) ? true : false;
+            return  ((("standalone" in window.navigator) && window.navigator.standalone) || (screen.height-document.documentElement.clientHeight<40)) ? true : false;
         };
 
         return Detector;
