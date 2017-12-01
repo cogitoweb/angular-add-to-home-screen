@@ -1,24 +1,23 @@
 angular-add-to-home-screen [![Build Status](https://travis-ci.org/austinpray/angular-add-to-home-screen.svg?branch=0.1.2)](https://travis-ci.org/austinpray/angular-add-to-home-screen)
 =========================
 
-An AngularJS directive to display an "add to homescreen" dialog for iOS.
+An AngularJS directive to display an "add to homescreen" dialog for iOS Safari and Android Firefox.
 
 [Try it out](http://rawgit.com/austinpray/angular-add-to-home-screen/master/example.html) (hint: your user agent needs to identify as an iOS device).
 
-![iOS7](http://i.imgur.com/UVjLVWw.png)
-![iOS6](http://i.imgur.com/Ap4r995.png)
 
 Installation
 ---
-### bower
 ```
-bower install angular-add-to-home-screen
+npm install angular-add-to-home-screen --save
 ```
 
 Setup
 ---
 1. Grab `dist/angular-add-to-home-screen.js` and include it in your javascript payload
 2. Import the module as a dependency
+3. Grab `node_modules/angular-cookies/angular-cookies.js` and include it in your javascript payload
+4. Grab `node_modules/ua-parser-js/src/ua-parser.js` and include it in your javascript payload
 ```js
 angular.module('myApp', ['angularAddToHomeScreen']);
 ```
@@ -42,9 +41,9 @@ free to just copy the styles into your project.
 div.aaths-container
   a.aaths-close // close button
   div.aaths-instructions
-    span.aaths-iOS6-icon // "share" icon if iOS6
-    span.aaths-iOS7-icon // "share" icon if iOS7
-    span.aaths-iOS8-icon // "share" icon if iOS8
+    span.aaths-iOS6-icon // "share" icon if <= iOS6
+    span.aaths-iOS8-icon // "share" icon if > iOS6
+	span.aaths-android-icon // "share" icon if Android
 ```
 
 ### why?
@@ -59,9 +58,6 @@ Issues and pull requests greatly appreciated. Please be on the lookout for:
 - outdated User Agent strings
 - tests failing
 - improve testing
-
-### Todo
-- Add to homescreen for Android Chrome
 
 License
 ---

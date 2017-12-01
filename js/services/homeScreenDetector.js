@@ -53,7 +53,7 @@ angular.module('angularAddToHomeScreen')
         };
 
         Detector.prototype.fullscreen = function () {
-            return (("standalone" in window.navigator) && window.navigator.standalone) ? true : false;
+            return  ((("standalone" in window.navigator) && window.navigator.standalone) || (screen.height-document.documentElement.clientHeight<40)) ? true : false;
         };
 
         return Detector;
